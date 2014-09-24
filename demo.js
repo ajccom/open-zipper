@@ -1,7 +1,9 @@
 "use strict"
 ;(function (win, isDebug, undefined) {
   var demo = (function () {
-    var log = isDebug ? (window.console ? console.log : alert) : function () {};
+    var log = function (s) {
+      isDebug ? (window.console ? console.log(s) : '') : '';
+    };
   
     var isMobile = (function () {
       var ua = navigator.userAgent;
@@ -66,8 +68,8 @@
             demo.isWait = true;
             setTimeout(function () {
               var offset = that.getBoundingClientRect();
-              var x = e.clientX - offset.x,
-                  y = e.clientY - offset.y,
+              var x = e.clientX - (offset.x || offset.left),
+                  y = e.clientY - (offset.y || offset.top),
                   cy = demo.currentY;
               demo.isWait = false;
               if (Math.abs(that.width / 2 - x) < 40 && (Math.abs(cy - y) < 20 || demo.isHit)) {
@@ -142,7 +144,7 @@
         //设置一个算子，在高度小于distance的条件下，取出该高度下的宽度
         //压缩原像素在获取的宽度内
         //超出宽度的设置透明
-        //目测算子: 1 / 2000 * y^2
+        //目测算子: 1 / 2000 * y^2 - 1
         var i = 0,
             l = data.width * data.height,
             d = data.data,
@@ -158,7 +160,7 @@
           idx = i * 4;
           if (currentY < distance) {
             if (currentY !== savedHeight) {
-              w = data.width - 1 / 2000 * (distance - currentY) * (distance - currentY);
+              w = data.width - 1 / 3000 * (distance - currentY) * (distance - currentY) - 1;
               savedHeight = currentY;
             }
             if (currentX < w) {
