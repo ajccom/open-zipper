@@ -2,7 +2,7 @@
 ;(function (win, isDebug, undefined) {
   var demo = (function () {
     var log = function (s) {
-      isDebug ? (window.console ? console.log(s) : return) : return;
+      isDebug ? (window.console ? console.log(s) : null) : null;
     };
   
     var isMobile = (function () {
