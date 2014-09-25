@@ -82,6 +82,7 @@
       demo.canvas.addEventListener(event.move, function (e) {
         if (e.preventDefault) {e.preventDefault();}
         if (demo.isTouched && !demo.isComplete) {
+          helper.write('ok, let it move');
           var that = this;
           if (!demo.isWait) {
             demo.isWait = true;
@@ -106,11 +107,13 @@
       demo.canvas.addEventListener(event.start, function (e) {
         demo.isTouched = true;
         demo.isHit = false;
+        helper.write('demo touched: ' + demo.isTouched);
       });
       
       document.addEventListener(event.end, function (e) {
         demo.isTouched = false;
         demo.isHit = false;
+        helper.write('demo touched: ' + demo.isTouched);
       });
       
     };
