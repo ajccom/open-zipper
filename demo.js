@@ -126,8 +126,6 @@
       distance = distance || 0;
       demo.currentY = distance;
       if (loader.isComplete && !demo.isComplete) {
-        //funny, haha
-        document.querySelector('.layout').className = 'layout ball';
         
         var img = document.getElementById('canvas'),
             ctx = demo.ctx,
@@ -151,6 +149,9 @@
         
         img = document.getElementById('hand');
         ctx.drawImage(img, sw, distance - 10, sw, 200);
+        
+        //funny, haha
+        document.querySelector('.layout').className = 'layout ball';
         
       } else {
         setTimeout(function () {
