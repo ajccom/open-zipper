@@ -15,7 +15,7 @@
       };
       return {
         ini: function () {
-          document.body.append(div);
+          document.body.appendChild(div);
         },
         hide: function () {
           div.style.display = 'none';
