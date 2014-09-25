@@ -87,10 +87,10 @@
             demo.isWait = true;
             setTimeout(function () {
               var offset = that.getBoundingClientRect();
-              var x = e.clientX - (offset.x || offset.left),
-                  y = e.clientY - (offset.y || offset.top),
+              var x = (e.clientX || e.touches[0].x) - (offset.x || offset.left),
+                  y = (e.clientY || e.touches[0].y) - (offset.y || offset.top),
                   cy = demo.currentY;
-              helper.write(offset);
+              helper.write(e.touches[0]);
               demo.isWait = false;
               if (Math.abs(that.width / 2 - x) < 40 && (Math.abs(cy - y) < 20 || demo.isHit)) {
                 demo.isHit = true;
