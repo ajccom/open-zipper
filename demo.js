@@ -126,6 +126,9 @@
       distance = distance || 0;
       demo.currentY = distance;
       if (loader.isComplete && !demo.isComplete) {
+        //funny, haha
+        document.querySelector('.layout').className = 'layout ball';
+        
         var img = document.getElementById('canvas'),
             ctx = demo.ctx,
             shadowCtx = demo.shadowCtx,
