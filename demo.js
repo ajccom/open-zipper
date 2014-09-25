@@ -90,8 +90,7 @@
               var x = (typeof e.clientX === 'undefined' ? e.touches[0].pageX : e.clientX) - (offset.x || offset.left),
                   y = (typeof e.clientY === 'undefined' ? e.touches[0].pageY : e.clientY) - (offset.y || offset.top),
                   cy = demo.currentY;
-              helper.write('x: ' + (typeof e.clientX === 'undefined' ? e.touches[0].pageX : e.clientX));
-              helper.write('y: ' + (typeof e.clientY === 'undefined' ? e.touches[0].pageY : e.clientY));
+              helper.write('x: ' + (typeof e.clientX === 'undefined' ? e.touches[0].pageX : e.clientX) + ' y: ' + (typeof e.clientY === 'undefined' ? e.touches[0].pageY : e.clientY));
               demo.isWait = false;
               if (Math.abs(that.width / 2 - x) < 40 && (Math.abs(cy - y) < 40 || demo.isHit)) {
                 if (!demo.isHit) {helper.write('get!')}
