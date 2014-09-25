@@ -1,17 +1,36 @@
 "use strict"
+
 ;(function (win, isDebug, undefined) {
   var demo = (function () {
     var log = function (s) {
       isDebug ? (window.console ? console.log(s) : null) : null;
     };
-  
+    
+    var errorReporter = (function () {
+      if (!isDebug) {return}
+      var div = document.createElement('div');
+      div.className = 'error-reporter';
+      document.body.appendChild(div);
+      window.onerror = function (msg, url, line) {
+        div.innerHTML = '<div class="item">' + msg + ' ' + 'line: ' + line + '</div>' + div.innerHTML;
+      };
+      return {
+        show: function () {
+          div.style.display = 'block';
+        },
+        hide: function () {
+          div.style.display = 'none';
+        }
+      };
+    }());
+    
     var isMobile = (function () {
-      var ua = navigator.userAgent;
+      var ua = navigator.userAgent,
+          result = false;
       if (ua.match(/Android/i) || ua.match(/webOS/i) || ua.match(/iPhone/i) || ua.match(/iPad/i) || ua.match(/iPod/i) || ua.match(/BlackBerry/i) || ua.match(/Windows Phone/i)) {
-        return true;
-      } else {
-        return false;
+        result = true;
       }
+      return result;
     }());
     
     var event = {
@@ -262,12 +281,10 @@
       ini: function () {
         this.loader.ini();
         this.helper.ini();
-        
         this.canvas = document.getElementById('ctx');
         this.ctx = this.canvas.getContext('2d');
         this.canvas.width = this.canvas.clientWidth;//reset ctx width
         this.canvas.height = this.canvas.clientHeight;
-        
         this.shadowCanvas = document.createElement('canvas');
         this.shadowCtx = this.shadowCanvas.getContext('2d');
         this.shadowCanvas.width = this.canvas.clientWidth / 2;
@@ -286,6 +303,7 @@
   
   win.addEventListener('load', function () {
     demo.ini();
+    demo.helper.write('isMobile: ' + demo.isMobile)
   });
   
 }(window, true));
