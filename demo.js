@@ -51,16 +51,19 @@
           name = this.list.shift();
           img = document.createElement('img');
           img.src = this.dir + name;
-          (function (name) {
+          img.id = name.split('.')[0];
+          (function (name, img) {
             img.addEventListener('load', function () {
               that.count++;
               helper.write('load images: ' + name + ' ' + Math.ceil(that.count / that.total * 100) + '%');
+              this.style.display = 'none';
+              document.body.appendChild(img);
               if (that.count === that.total) {
                 that.isComplete = true;
                 helper.write('load images complete');
               }
             });
-          }(name));
+          }(name, img));
         }
       },
       ini: function () {
@@ -123,13 +126,12 @@
       distance = distance || 0;
       demo.currentY = distance;
       if (loader.isComplete && !demo.isComplete) {
-        var img = new Image(),
+        var img = document.getElementById('canvas'),
             ctx = demo.ctx,
             shadowCtx = demo.shadowCtx,
             sw = demo.shadowCanvas.width,
             w = demo.canvas.width,
             h = demo.canvas.height;
-        img.src = 'images/canvas.jpg';
         
         shadowCtx.drawImage(img, 0, 0, sw, h);
         var imageData = _getImageData(distance);
@@ -144,8 +146,7 @@
         ctx.drawImage(demo.shadowCanvas, 0, 0);
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         
-        img = new Image();
-        img.src = 'images/hand.png';
+        img = document.getElementById('hand');
         ctx.drawImage(img, sw, distance - 10, sw, 200);
         
       } else {
