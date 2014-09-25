@@ -80,7 +80,7 @@
       });
       
       demo.canvas.addEventListener(event.move, function (e) {
-        if (e.preventDefault) {e.preventDefault();)
+        if (e.preventDefault) {e.preventDefault();}
         if (demo.isTouched && !demo.isComplete) {
           var that = this;
           if (!demo.isWait) {
