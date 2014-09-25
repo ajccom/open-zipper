@@ -27,6 +27,9 @@ html, body {height: 100%; width: 100%;}
 .help-show-box {position: absolute; right: 0; top: 0; width: 300px; height: 400px; border: 1px solid #bbb; background: #000; color: #fff; font-size: 14px; line-height: 1.4em; overflow: hidden;}
 .help-show-box p {padding: 3px;}
 .error-reporter {position: fixed; top: 0; left: 0; width: 100%; background: rgba(255, 0, 0, 0.3); color: red; font-size: 12px; line-height: 1.4em;}
+@media all and (max-width: 960px) {/*mobile*/
+  .help-show-box {top: auto; bottom: 0; height: 100px; width: 100%; background: rgba(0, 0, 0, 0.5)}
+}
 </style>
 </body>
 </html>
