@@ -82,7 +82,6 @@
       demo.canvas.addEventListener(event.move, function (e) {
         if (e.preventDefault) {e.preventDefault();}
         if (demo.isTouched && !demo.isComplete) {
-          helper.write('ok, let it move');
           var that = this;
           if (!demo.isWait) {
             demo.isWait = true;
@@ -91,6 +90,7 @@
               var x = e.clientX - (offset.x || offset.left),
                   y = e.clientY - (offset.y || offset.top),
                   cy = demo.currentY;
+              helper.write(y);
               demo.isWait = false;
               if (Math.abs(that.width / 2 - x) < 40 && (Math.abs(cy - y) < 20 || demo.isHit)) {
                 demo.isHit = true;
