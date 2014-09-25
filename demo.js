@@ -1,17 +1,35 @@
 "use strict"
+
 ;(function (win, isDebug, undefined) {
   var demo = (function () {
     var log = function (s) {
       isDebug ? (window.console ? console.log(s) : null) : null;
     };
-  
+    
+    var errorReporter = (function () {
+      if (!isDebug) {return}
+      var div = document.createElement('div');
+      div.className = 'error-reporter';
+      window.onerror = function (msg, url, line) {
+        div.innerHTML = '<div class="item">' + msg + ' ' + 'line: ' + line + '</div>' + div.innerHTML;
+      };
+      return {
+        ini: function () {
+          document.body.appendChild(div);
+        },
+        hide: function () {
+          div.style.display = 'none';
+        }
+      };
+    }());
+    
     var isMobile = (function () {
-      var ua = navigator.userAgent;
+      var ua = navigator.userAgent,
+          result = false;
       if (ua.match(/Android/i) || ua.match(/webOS/i) || ua.match(/iPhone/i) || ua.match(/iPad/i) || ua.match(/iPod/i) || ua.match(/BlackBerry/i) || ua.match(/Windows Phone/i)) {
-        return true;
-      } else {
-        return false;
+        result = true;
       }
+      return result;
     }());
     
     var event = {
@@ -62,17 +80,20 @@
       });
       
       demo.canvas.addEventListener(event.move, function (e) {
+        if (e.preventDefault) {e.preventDefault();}
         if (demo.isTouched && !demo.isComplete) {
           var that = this;
           if (!demo.isWait) {
             demo.isWait = true;
             setTimeout(function () {
               var offset = that.getBoundingClientRect();
-              var x = e.clientX - (offset.x || offset.left),
-                  y = e.clientY - (offset.y || offset.top),
+              var x = (typeof e.clientX === 'undefined' ? e.touches[0].pageX : e.clientX) - (offset.x || offset.left),
+                  y = (typeof e.clientY === 'undefined' ? e.touches[0].pageY : e.clientY) - (offset.y || offset.top),
                   cy = demo.currentY;
+              helper.write('x: ' + (typeof e.clientX === 'undefined' ? e.touches[0].pageX : e.clientX) + ' y: ' + (typeof e.clientY === 'undefined' ? e.touches[0].pageY : e.clientY));
               demo.isWait = false;
-              if (Math.abs(that.width / 2 - x) < 40 && (Math.abs(cy - y) < 20 || demo.isHit)) {
+              if (Math.abs(that.width / 2 - x) < 40 && (Math.abs(cy - y) < 40 || demo.isHit)) {
+                if (!demo.isHit) {helper.write('get!')}
                 demo.isHit = true;
                 draw(y);
                 if (Math.abs(demo.canvas.height - y) < 200) {
@@ -87,11 +108,13 @@
       demo.canvas.addEventListener(event.start, function (e) {
         demo.isTouched = true;
         demo.isHit = false;
+        helper.write('demo touched: ' + demo.isTouched);
       });
       
       document.addEventListener(event.end, function (e) {
         demo.isTouched = false;
         demo.isHit = false;
+        helper.write('demo touched: ' + demo.isTouched);
       });
       
     };
@@ -259,20 +282,19 @@
       isMobile: isMobile,
       loader: loader,
       helper: helper,
+      errorReporter: errorReporter,
       ini: function () {
         this.loader.ini();
         this.helper.ini();
-        
+        this.errorReporter.ini();
         this.canvas = document.getElementById('ctx');
         this.ctx = this.canvas.getContext('2d');
         this.canvas.width = this.canvas.clientWidth;//reset ctx width
         this.canvas.height = this.canvas.clientHeight;
-        
         this.shadowCanvas = document.createElement('canvas');
         this.shadowCtx = this.shadowCanvas.getContext('2d');
         this.shadowCanvas.width = this.canvas.clientWidth / 2;
         this.shadowCanvas.height = this.canvas.clientHeight;
-        
         bind();
         draw();
       }
@@ -286,6 +308,7 @@
   
   win.addEventListener('load', function () {
     demo.ini();
+    demo.helper.write('isMobile: ' + demo.isMobile)
   });
   
 }(window, true));
