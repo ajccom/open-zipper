@@ -90,10 +90,11 @@
               var x = (typeof e.clientX === 'undefined' ? e.touches[0].pageX : e.clientX) - (offset.x || offset.left),
                   y = (typeof e.clientY === 'undefined' ? e.touches[0].pageY : e.clientY) - (offset.y || offset.top),
                   cy = demo.currentY;
-              helper.write((typeof e.clientX === 'undefined' ? e.touches[0].pageX : e.clientX));
-              helper.write((typeof e.clientY === 'undefined' ? e.touches[0].pageY : e.clientY));
+              helper.write('x: ' + (typeof e.clientX === 'undefined' ? e.touches[0].pageX : e.clientX));
+              helper.write('y: ' + (typeof e.clientY === 'undefined' ? e.touches[0].pageY : e.clientY));
               demo.isWait = false;
-              if (Math.abs(that.width / 2 - x) < 40 && (Math.abs(cy - y) < 20 || demo.isHit)) {
+              if (Math.abs(that.width / 2 - x) < 40 && (Math.abs(cy - y) < 40 || demo.isHit)) {
+                if (!demo.isHit) {helper.write('get!')}
                 demo.isHit = true;
                 draw(y);
                 if (Math.abs(demo.canvas.height - y) < 200) {
