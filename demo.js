@@ -10,13 +10,12 @@
       if (!isDebug) {return}
       var div = document.createElement('div');
       div.className = 'error-reporter';
-      document.body.appendChild(div);
       window.onerror = function (msg, url, line) {
         div.innerHTML = '<div class="item">' + msg + ' ' + 'line: ' + line + '</div>' + div.innerHTML;
       };
       return {
-        show: function () {
-          div.style.display = 'block';
+        ini: function () {
+          document.body.append(div);
         },
         hide: function () {
           div.style.display = 'none';
@@ -278,9 +277,11 @@
       isMobile: isMobile,
       loader: loader,
       helper: helper,
+      errorReporter: errorReporter,
       ini: function () {
         this.loader.ini();
         this.helper.ini();
+        this.errorReporter.ini();
         this.canvas = document.getElementById('ctx');
         this.ctx = this.canvas.getContext('2d');
         this.canvas.width = this.canvas.clientWidth;//reset ctx width
@@ -289,7 +290,6 @@
         this.shadowCtx = this.shadowCanvas.getContext('2d');
         this.shadowCanvas.width = this.canvas.clientWidth / 2;
         this.shadowCanvas.height = this.canvas.clientHeight;
-        
         bind();
         draw();
       }
