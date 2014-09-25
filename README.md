@@ -2,7 +2,11 @@
 
 使用canvas实现的拉链拉开的效果
 
-### [查看效果](http://ajccom.github.io/open-zipper/)
+### [查看效果](http://ajccom.github.io/open-zipper)
+
+![](images/temp/qr.png)
+
+-----------------------------
 
 ## 实现原理
 
