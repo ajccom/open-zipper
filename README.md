@@ -1,6 +1,6 @@
 # OPEN-ZIPPER
 
-使用canvas实现的拉链拉开的效果。
+使用canvas实现的拉链拉开的效果（二次曲线算子）。
 
 ### [查看效果](http://ajccom.github.io/open-zipper)
 
